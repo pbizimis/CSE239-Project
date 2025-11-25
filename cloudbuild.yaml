@@ -27,9 +27,6 @@ steps:
         docker push gcr.io/$PROJECT_ID/olympis-agents:$COMMIT_SHA
     waitFor: ['build-server', 'build-crawler', 'build-agents']
 
-options:
-  logging: CLOUD_LOGGING_ONLY
-
 images:
   - 'gcr.io/$PROJECT_ID/olympis-server:$COMMIT_SHA'
   - 'gcr.io/$PROJECT_ID/olympis-crawler:$COMMIT_SHA'
