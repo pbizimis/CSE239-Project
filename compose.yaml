@@ -1,0 +1,126 @@
+services:
+  olympis-server:
+    build: ./olympis-server
+    env_file: ./olympis-server/.env
+    environment:
+      POSTGRES_DB: "olympis"
+      POSTGRES_USER: "olympis"
+      POSTGRES_PASSWORD: "olympis"
+      POSTGRES_SERVER: "db"
+      POSTGRES_PORT: "5432"
+      REDIS_HOST: "redis-stack"
+      REDIS_PORT: "6379"
+      REDIS_DB: "0"
+    ports:
+      - "8000:8000"
+    develop:
+      watch:
+        - action: sync
+          path: ./olympis-server
+          target: ./code
+          ignore:
+            - ".venv"
+            - "__pycache__"
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+      redis-stack:
+        condition: service_started
+
+  rq-worker:
+    build: ./olympis-server
+    env_file: ./olympis-server/.env
+    environment:
+      POSTGRES_DB: "olympis"
+      POSTGRES_USER: "olympis"
+      POSTGRES_PASSWORD: "olympis"
+      POSTGRES_SERVER: "db"
+      POSTGRES_PORT: "5432"
+      REDIS_URL: "redis://redis-stack:6379/0"
+    command: rq worker -u "$REDIS_URL" default
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+      redis-stack:
+        condition: service_started
+    restart: unless-stopped
+    develop:
+      watch:
+        - action: sync
+          path: ./olympis-server
+          target: /code
+          ignore:
+            - ".venv"
+            - "__pycache__"
+
+  agents-worker:
+    build: ./olympis-agents
+    environment:
+      REDIS_URL: "redis://redis-stack:6379/0"
+    command: rq worker -u "$REDIS_URL" agents
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+      redis-stack:
+        condition: service_started
+    develop:
+      watch:
+        - action: sync
+          path: ./olympis-agents
+          target: /code
+          ignore:
+            - ".venv"
+            - "__pycache__"
+
+  crawler-worker:
+    build: ./olympis-crawler
+    environment:
+      REDIS_URL: "redis://redis-stack:6379/0"
+    command: rq worker -u "$REDIS_URL" crawler
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+      redis-stack:
+        condition: service_started
+    develop:
+      watch:
+        - action: sync
+          path: ./olympis-crawler
+          target: /code
+          ignore:
+            - ".venv"
+            - "__pycache__"
+
+  redis-stack:
+    image: redis/redis-stack:latest
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+
+  db:
+    image: postgres:17.5
+    restart: always
+    environment:
+      POSTGRES_DB: olympis
+      POSTGRES_USER: olympis
+      POSTGRES_PASSWORD: "olympis"
+    ports:
+      - "5432:5432"
+    volumes:
+      - type: tmpfs
+        target: /var/lib/postgresql/data
+        tmpfs:
+          size: 2147483648
+      # - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U olympis -d olympis"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  postgres_data:

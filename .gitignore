@@ -1,0 +1,14 @@
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+.aider*
+.env
+.prettierrc
+.venv
+.ruff_cache
+__pycache__
+secrets
+.llm-commit.json
+.tanstack

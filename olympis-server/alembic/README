@@ -1,0 +1,9 @@
+pyproject configuration, with an async dbapi.
+
+uv run -- alembic revision --autogenerate -m "Initial schema"
+uv run -- alembic upgrade head
+
+uv run -- alembic current
+uv run -- alembic history | tail -n 20
+
+uv run -- alembic downgrade -1
