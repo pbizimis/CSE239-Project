@@ -1,21 +1,21 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build-server'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/olympis-server:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/repo/olympis-server:$COMMIT_SHA', '.']
     dir: 'olympis-server'
     env: ['DOCKER_BUILDKIT=1']
     waitFor: ['-']
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build-crawler'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/olympis-crawler:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/repo/olympis-crawler:$COMMIT_SHA', '.']
     dir: 'olympis-crawler'
     env: ['DOCKER_BUILDKIT=1']
     waitFor: ['-']
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build-agents'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/olympis-agents:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/repo/olympis-agents:$COMMIT_SHA', '.']
     dir: 'olympis-agents'
     env: ['DOCKER_BUILDKIT=1']
     waitFor: ['-']
@@ -25,15 +25,15 @@ steps:
     args:
       - '-c'
       - |
-        docker push gcr.io/$PROJECT_ID/olympis-server:$COMMIT_SHA
-        docker push gcr.io/$PROJECT_ID/olympis-crawler:$COMMIT_SHA
-        docker push gcr.io/$PROJECT_ID/olympis-agents:$COMMIT_SHA
+        docker push us-central1-docker.pkg.dev/$PROJECT_ID/repo/olympis-server:$COMMIT_SHA
+        docker push us-central1-docker.pkg.dev/$PROJECT_ID/repo/olympis-crawler:$COMMIT_SHA
+        docker push us-central1-docker.pkg.dev/$PROJECT_ID/repo/olympis-agents:$COMMIT_SHA
     waitFor: ['build-server', 'build-crawler', 'build-agents']
 
 options:
   logging: CLOUD_LOGGING_ONLY
 
 images:
-  - 'gcr.io/$PROJECT_ID/olympis-server:$COMMIT_SHA'
-  - 'gcr.io/$PROJECT_ID/olympis-crawler:$COMMIT_SHA'
-  - 'gcr.io/$PROJECT_ID/olympis-agents:$COMMIT_SHA'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/repo/olympis-server:$COMMIT_SHA'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/repo/olympis-crawler:$COMMIT_SHA'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/repo/olympis-agents:$COMMIT_SHA'
