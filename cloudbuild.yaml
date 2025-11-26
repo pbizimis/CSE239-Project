@@ -38,19 +38,13 @@ steps:
     env: ['DOCKER_BUILDKIT=1']
     waitFor: ['-']
 
-  - name: 'gcr.io/cloud-builders/docker'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        docker push us-central1-docker.pkg.dev/$PROJECT_ID/olympis-repo/olympis-server:$COMMIT_SHA
-        docker push us-central1-docker.pkg.dev/$PROJECT_ID/olympis-repo/olympis-crawler:$COMMIT_SHA
-        docker push us-central1-docker.pkg.dev/$PROJECT_ID/olympis-repo/olympis-agents:$COMMIT_SHA
-
-        docker push us-central1-docker.pkg.dev/$PROJECT_ID/olympis-repo/olympis-server:latest
-        docker push us-central1-docker.pkg.dev/$PROJECT_ID/olympis-repo/olympis-crawler:latest
-        docker push us-central1-docker.pkg.dev/$PROJECT_ID/olympis-repo/olympis-agents:latest
-    waitFor: ['build-server', 'build-crawler', 'build-agents']
+images:
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/olympis-repo/olympis-server:$COMMIT_SHA'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/olympis-repo/olympis-server:latest'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/olympis-repo/olympis-crawler:$COMMIT_SHA'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/olympis-repo/olympis-crawler:latest'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/olympis-repo/olympis-agents:$COMMIT_SHA'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/olympis-repo/olympis-agents:latest'
 
 options:
   logging: CLOUD_LOGGING_ONLY
