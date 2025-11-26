@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: olympis-config
+data:
+  POSTGRES_DB: "olympis"
+  POSTGRES_USER: "olympis"
+  POSTGRES_SERVER: "db"
+  POSTGRES_PORT: "5432"
+  REDIS_HOST: "redis-stack"
+  REDIS_PORT: "6379"
+  REDIS_DB: "0"
+  REDIS_URL: "redis://redis-stack:6379/0"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: olympis-secret
+type: Opaque
+stringData:
+  POSTGRES_PASSWORD: "olympis"

@@ -1,0 +1,79 @@
+# --- RQ Worker ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rq-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rq-worker
+  template:
+    metadata:
+      labels:
+        app: rq-worker
+    spec:
+      containers:
+        - name: rq-worker
+          image: us-central1-docker.pkg.dev/project-1555c6ef-5e1d-439f-a69/olympis-repo/olympis-server:latest
+          imagePullPolicy: Always
+          command: ["rq", "worker", "-u", "$(REDIS_URL)", "default"]
+          envFrom:
+            - configMapRef:
+                name: olympis-config
+            - secretRef:
+                name: olympis-secret
+
+---
+# --- Agents Worker ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agents-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agents-worker
+  template:
+    metadata:
+      labels:
+        app: agents-worker
+    spec:
+      containers:
+        - name: agents-worker
+          image: us-central1-docker.pkg.dev/project-1555c6ef-5e1d-439f-a69/olympis-repo/olympis-agents:latest
+          imagePullPolicy: Always
+          command: ["rq", "worker", "-u", "$(REDIS_URL)", "agents"]
+          envFrom:
+            - configMapRef:
+                name: olympis-config
+            - secretRef:
+                name: olympis-secret
+
+---
+# --- Crawler Worker ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crawler-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crawler-worker
+  template:
+    metadata:
+      labels:
+        app: crawler-worker
+    spec:
+      containers:
+        - name: crawler-worker
+          image: us-central1-docker.pkg.dev/project-1555c6ef-5e1d-439f-a69/olympis-repo/olympis-crawler:latest
+          imagePullPolicy: Always
+          command: ["rq", "worker", "-u", "$(REDIS_URL)", "crawler"]
+          envFrom:
+            - configMapRef:
+                name: olympis-config
+            - secretRef:
+                name: olympis-secret

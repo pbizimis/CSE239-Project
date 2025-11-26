@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: olympis-server
+spec:
+  type: NodePort
+  ports:
+    - port: 8000
+      targetPort: 8000
+      nodePort: 30000
+  selector:
+    app: olympis-server
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: olympis-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: olympis-server
+  template:
+    metadata:
+      labels:
+        app: olympis-server
+    spec:
+      containers:
+        - name: server
+          image: us-central1-docker.pkg.dev/project-1555c6ef-5e1d-439f-a69/olympis-repo/olympis-server:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: olympis-config
+            - secretRef:
+                name: olympis-secret
