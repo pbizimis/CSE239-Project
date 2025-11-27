@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: olympis-config
+data:
+  # Replace with your Cloud SQL Private IP or Auth Proxy address
+  POSTGRES_SERVER: "10.0.0.1"
+  postgres
+  Databaseadmin1@
