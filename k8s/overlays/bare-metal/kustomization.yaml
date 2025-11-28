@@ -6,3 +6,8 @@ resources:
 
 patches:
   - path: patch-config.yaml
+  - path: patch-deployment.yaml
+  - path: patch-workers.yaml
+  - path: patch-keda.yaml
+
+

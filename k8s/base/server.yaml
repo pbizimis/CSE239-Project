@@ -30,6 +30,7 @@ spec:
         - name: server
           image: us-central1-docker.pkg.dev/project-1555c6ef-5e1d-439f-a69/olympis-repo/olympis-server:latest
           imagePullPolicy: Always
+          command: ["fastapi", "run", "app/main.py", "--port", "8000", "--host", "0.0.0.0", "--workers", "1"]
           ports:
             - containerPort: 8000
           envFrom:
