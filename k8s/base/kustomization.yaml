@@ -6,3 +6,4 @@ resources:
   - redis.yaml
   - server.yaml
   - workers.yaml
+  - keda.yaml
