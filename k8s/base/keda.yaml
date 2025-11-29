@@ -5,7 +5,7 @@ metadata:
 spec:
   scaleTargetRef:
     name: rq-worker
-  minReplicaCount: 0
+  minReplicaCount: 1
   maxReplicaCount: 5
   pollingInterval: 2
   cooldownPeriod: 30
@@ -24,7 +24,7 @@ metadata:
 spec:
   scaleTargetRef:
     name: agents-worker
-  minReplicaCount: 0
+  minReplicaCount: 1
   maxReplicaCount: 5
   pollingInterval: 2
   cooldownPeriod: 30
@@ -43,7 +43,7 @@ metadata:
 spec:
   scaleTargetRef:
     name: crawler-worker
-  minReplicaCount: 0
+  minReplicaCount: 1
   maxReplicaCount: 5
   pollingInterval: 2
   cooldownPeriod: 30
