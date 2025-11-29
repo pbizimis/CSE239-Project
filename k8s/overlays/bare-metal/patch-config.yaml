@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: olympis-config
 data:
-  POSTGRES_DB: "olympis"
+  POSTGRES_DB: "postgres"
   POSTGRES_USER: "postgres"
   POSTGRES_SERVER: "10.44.96.3"
 ---
