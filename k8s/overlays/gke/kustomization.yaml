@@ -4,7 +4,10 @@ kind: Kustomization
 resources:
   - ../../base
   - hpa.yaml
+  - ingress.yaml
+  - managed-cert.yaml
 
 patches:
   - path: patch-config.yaml
   - path: patch-deployment.yaml
+

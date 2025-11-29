@@ -5,5 +5,5 @@ metadata:
 data:
   # Replace with your Cloud SQL Private IP or Auth Proxy address
   POSTGRES_SERVER: "10.0.0.1"
-  postgres
-  Databaseadmin1@
+  # postgres
+  # Databaseadmin1@
