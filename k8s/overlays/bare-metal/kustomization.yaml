@@ -8,6 +8,7 @@ resources:
 
 patches:
   - path: patch-config.yaml
+  - path: patch-service.yaml
 
   - path: patch-deployment.yaml
   - path: patch-workers.yaml
