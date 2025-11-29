@@ -3,12 +3,11 @@ kind: Ingress
 metadata:
   name: olympis-ingress
   annotations:
-    # K3s uses Traefik by default
-    kubernetes.io/ingress.class: "traefik"
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.tls: "true"
-    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    cert-manager.io/issuer: "letsencrypt-staging"
 spec:
+  ingressClassName: "traefik"
   tls:
     - hosts:
         - gce.olympisai.com

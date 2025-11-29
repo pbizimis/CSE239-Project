@@ -5,6 +5,8 @@ One important thing:
 The configs are domain and IP specific. Therefore, they will not 'just work'.
 
 After configuring domain and external IP of my VM:
+
 - Clone the repo
 - `sudo k3s kubectl apply -f k8s/infra/cert-manager.yaml`
-- `sudo k3s kubectl apply -k k8s/overlay/bare-metal`
+- `sudo k3s kubectl apply --server-side -f k8s/infra/keda-2.18.1.yaml`
+- `sudo k3s kubectl apply -k k8s/overlays/bare-metal`
