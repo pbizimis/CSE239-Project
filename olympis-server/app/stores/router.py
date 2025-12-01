@@ -11,39 +11,12 @@ from app.user.dependencies import UserDependency
 from .schema import (
     CreateStoreRequest,
     CreateStoreResponse,
-    StoreDataResponse,
     StoresResponse,
 )
-from .service import create_store, delete_store, get_store_data_for_user, get_stores_db
+from .service import create_store, delete_all_stores, delete_store, get_stores_db
 
 logger = get_logger(__name__)
 router = APIRouter()
-
-
-@router.get("/{store_id}/data", response_model=StoreDataResponse)
-async def get_store_data(
-    store_id: str, user: UserDependency, session: DatabaseDependency
-) -> StoreDataResponse:
-    logger.info(
-        f"Store data requested for user: {user.id}, store_id: {store_id}"
-    )
-    try:
-        store_uuid = uuid.UUID(store_id)
-    except ValueError:
-        logger.warning(f"Invalid store_id format: {store_id}")
-        raise ValueError("Invalid store ID format")
-
-    try:
-        result = await get_store_data_for_user(user.id, store_uuid, session)
-        logger.info(
-            f"Store data retrieved successfully for user: {user.id}, store_id: {store_id}"
-        )
-        return result
-    except Exception:
-        logger.exception(
-            f"Error getting store data for user: {user.id}, store_id: {store_id}"
-        )
-        raise
 
 
 @router.get("/", response_model=StoresResponse)
@@ -86,6 +59,16 @@ async def create_new_store(
     logger.info(f"Queued metadata job {store.setup_job_id} for store {store.id}")
 
     return store
+
+
+@router.delete("/")
+async def delete_all_stores_endpoint(
+    user: UserDependency,
+    session: DatabaseDependency,
+) -> dict:
+    logger.info(f"Request to delete all stores for user: {user.id}")
+    await delete_all_stores(user.id, session)
+    return {"message": "All stores deleted successfully"}
 
 
 @router.delete("/{store_id}")

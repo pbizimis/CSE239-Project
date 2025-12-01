@@ -197,6 +197,38 @@ async def delete_store(
         raise
 
 
+async def delete_all_stores(user_id: uuid.UUID, session: AsyncSession) -> None:
+    logger.info(f"Deleting all stores for user: {user_id}")
+    try:
+        # Find all stores where user is owner
+        query = (
+            select(Store)
+            .join(AssociationUserStore)
+            .where(
+                AssociationUserStore.user_id == user_id,
+                AssociationUserStore.role == StoreRole.owner,
+            )
+        )
+        result = await session.execute(query)
+        stores = result.scalars().all()
+
+        if not stores:
+            logger.info(f"No stores found to delete for user {user_id}")
+            return
+
+        for store in stores:
+            logger.info(f"Deleting store {store.id}")
+            await session.delete(store)
+
+        await session.commit()
+        logger.info(f"All stores deleted for user {user_id}")
+
+    except Exception:
+        logger.exception(f"Error deleting all stores for user: {user_id}")
+        await session.rollback()
+        raise
+
+
 async def complete_store_setup(store_id: uuid.UUID, extracted_data: dict, session: AsyncSession) -> None:
     logger.info(f"Completing setup for store: {store_id}")
     logger.info(f"Extracted data to save {extracted_data}")

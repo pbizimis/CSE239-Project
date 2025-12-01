@@ -106,8 +106,6 @@ app.add_middleware(
 
 app.include_router(user_router, prefix="/user")
 app.include_router(stores_router, prefix="/stores")
-app.include_router(campaigns_router, prefix="/campaigns")
-app.include_router(jobs_router, prefix="/jobs")
 
 logger.info(f"Application initialized with title: {API_TITLE}, version: {API_VERSION}")
 
