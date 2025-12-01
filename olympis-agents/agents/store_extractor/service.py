@@ -1,4 +1,5 @@
 import logging
+import math
 import time
 import traceback
 
@@ -21,7 +22,11 @@ def extract_store_data(html: str | None = None, events_id: str | None = None):
             html = dependencies[0].result
 
         result = {"agent": 1}
-        time.sleep(4)
+
+        # this simulates heavy llm parsing/text processing for 4 seconds
+        end_time = time.time() + 4
+        while time.time() < end_time:
+             math.factorial(100) # Math intensive
 
         return result
     except Exception:

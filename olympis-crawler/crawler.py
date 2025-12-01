@@ -1,4 +1,5 @@
 import time
+import math
 import json
 import logging
 from urllib.parse import urljoin
@@ -57,5 +58,8 @@ def clean_html(html: str, base_url: str | None = None):
 
 
 def get_cleaned_html(url: str, events_id: str | None = None):
-    time.sleep(2)
+    # this simulates heavy browser rendering for 2 seconds
+    end_time = time.time() + 2
+    while time.time() < end_time:
+        math.sqrt(12345.6789) * math.sqrt(98765.4321)
     return "CLEANED HTML"
