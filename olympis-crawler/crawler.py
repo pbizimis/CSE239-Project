@@ -62,4 +62,5 @@ def get_cleaned_html(url: str, events_id: str | None = None):
     end_time = time.time() + 2
     while time.time() < end_time:
         math.sqrt(12345.6789) * math.sqrt(98765.4321)
+        time.sleep(0.1)
     return "CLEANED HTML"

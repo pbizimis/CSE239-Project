@@ -27,6 +27,7 @@ def extract_store_data(html: str | None = None, events_id: str | None = None):
         end_time = time.time() + 4
         while time.time() < end_time:
              math.factorial(100) # Math intensive
+             time.sleep(0.1)
 
         return result
     except Exception:

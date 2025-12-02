@@ -6,7 +6,7 @@ spec:
   scaleTargetRef:
     name: rq-worker
   minReplicaCount: 1
-  maxReplicaCount: 5
+  maxReplicaCount: 3
   pollingInterval: 2
   cooldownPeriod: 30
   triggers:
@@ -14,7 +14,7 @@ spec:
       metadata:
         address: redis-stack.default.svc.cluster.local:6379
         listName: rq:queue:default
-        listLength: "5"
+        listLength: "10"
 
 ---
 apiVersion: keda.sh/v1alpha1
@@ -25,7 +25,7 @@ spec:
   scaleTargetRef:
     name: agents-worker
   minReplicaCount: 1
-  maxReplicaCount: 5
+  maxReplicaCount: 10
   pollingInterval: 2
   cooldownPeriod: 30
   triggers:
@@ -33,7 +33,7 @@ spec:
       metadata:
         address: redis-stack.default.svc.cluster.local:6379
         listName: rq:queue:agents
-        listLength: "5"
+        listLength: "3"
 
 ---
 apiVersion: keda.sh/v1alpha1
@@ -44,7 +44,7 @@ spec:
   scaleTargetRef:
     name: crawler-worker
   minReplicaCount: 1
-  maxReplicaCount: 5
+  maxReplicaCount: 10
   pollingInterval: 2
   cooldownPeriod: 30
   triggers:
@@ -52,4 +52,4 @@ spec:
       metadata:
         address: redis-stack.default.svc.cluster.local:6379
         listName: rq:queue:crawler
-        listLength: "5"
+        listLength: "3"

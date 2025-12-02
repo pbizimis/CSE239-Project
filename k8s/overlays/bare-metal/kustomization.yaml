@@ -12,6 +12,3 @@ patches:
 
   - path: patch-deployment.yaml
   - path: patch-workers.yaml
-  - path: patch-keda.yaml
-
-
