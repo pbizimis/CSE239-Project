@@ -5,6 +5,7 @@ resources:
   - ../../base
   - ingress.yaml
   - cluster-issuer.yaml
+  - priorities.yaml
 
 patches:
   - path: patch-config.yaml
@@ -12,3 +13,5 @@ patches:
 
   - path: patch-deployment.yaml
   - path: patch-workers.yaml
+  - path: patch-redis.yaml
+  - path: patch-keda.yaml

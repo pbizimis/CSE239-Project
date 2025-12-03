@@ -1,0 +1,25 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: rq-worker-scaler
+spec:
+  maxReplicaCount: 5
+  minReplicaCount: 0
+
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: agents-worker-scaler
+spec:
+  maxReplicaCount: 20
+  minReplicaCount: 0
+
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: crawler-worker-scaler
+spec:
+  maxReplicaCount: 20
+  minReplicaCount: 0

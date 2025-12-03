@@ -6,8 +6,12 @@ resources:
   - hpa.yaml
   - ingress.yaml
   - managed-cert.yaml
+  - priorities.yaml
 
 patches:
   - path: patch-config.yaml
   - path: patch-deployment.yaml
+  - path: patch-workers.yaml
+  - path: patch-redis.yaml
+  - path: patch-keda.yaml
 

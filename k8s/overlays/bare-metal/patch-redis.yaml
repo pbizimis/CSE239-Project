@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: olympis-server
+  name: redis
 spec:
   template:
     spec:
       priorityClassName: high-priority-core
       containers:
-        - name: server
+        - name: redis
           resources:
             requests:
-              cpu: "1000m"
-              memory: "1Gi"
+              memory: "512Mi"
+              cpu: "250m"
             limits:
-              memory: "4Gi"
+              memory: "2Gi"

@@ -6,7 +6,7 @@ spec:
   scaleTargetRef:
     name: rq-worker
   minReplicaCount: 1
-  maxReplicaCount: 3
+  maxReplicaCount: 10
   pollingInterval: 2
   cooldownPeriod: 30
   triggers:
