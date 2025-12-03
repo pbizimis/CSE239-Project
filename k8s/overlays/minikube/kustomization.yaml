@@ -5,6 +5,3 @@ resources:
   - ../../base
   - db.yaml
   - migration-job.yaml
-
-patches:
-  - path: patch-deployment.yaml

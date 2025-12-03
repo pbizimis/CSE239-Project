@@ -4,7 +4,7 @@ metadata:
   name: rq-worker-scaler
 spec:
   maxReplicaCount: 2
-  minReplicaCount: 0
+  minReplicaCount: 1
 
 ---
 apiVersion: keda.sh/v1alpha1
@@ -13,7 +13,7 @@ metadata:
   name: agents-worker-scaler
 spec:
   maxReplicaCount: 4
-  minReplicaCount: 0
+  minReplicaCount: 1
 
 ---
 apiVersion: keda.sh/v1alpha1
@@ -22,4 +22,4 @@ metadata:
   name: crawler-worker-scaler
 spec:
   maxReplicaCount: 4
-  minReplicaCount: 0
+  minReplicaCount: 1

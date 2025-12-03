@@ -11,3 +11,11 @@ After configuring domain, external IP, and database. Run these in the VM:
 - `sudo k3s kubectl apply -f k8s/infra/cert-manager.yaml`
 - `sudo k3s kubectl apply --server-side -f k8s/infra/keda-2.18.1.yaml`
 - `sudo k3s kubectl apply -k k8s/overlays/bare-metal`
+
+For grafana to work, there are additional steps required.
+
+- Install helm
+- Configure Kubernetes to be accessible without k3s and sudo (base `kubectl` needs to work)
+- Then, follow grafana instructions
+
+Total setup time is about 5 minutes.
