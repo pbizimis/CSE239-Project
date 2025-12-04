@@ -3,7 +3,7 @@ kind: ScaledObject
 metadata:
   name: rq-worker-scaler
 spec:
-  maxReplicaCount: 2
+  maxReplicaCount: 3
   minReplicaCount: 1
 
 ---
@@ -12,7 +12,7 @@ kind: ScaledObject
 metadata:
   name: agents-worker-scaler
 spec:
-  maxReplicaCount: 4
+  maxReplicaCount: 8
   minReplicaCount: 1
 
 ---
@@ -21,5 +21,5 @@ kind: ScaledObject
 metadata:
   name: crawler-worker-scaler
 spec:
-  maxReplicaCount: 4
+  maxReplicaCount: 8
   minReplicaCount: 1
